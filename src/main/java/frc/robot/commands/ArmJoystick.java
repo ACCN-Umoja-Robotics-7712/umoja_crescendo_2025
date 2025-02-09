@@ -58,27 +58,27 @@ public class ArmJoystick extends Command {
         //Running the arm
         armInput = j.getRawAxis(OIConstants.LY)*0.4;
 
-        if (j.getRawButton(OIConstants.B)) {
-            armPos = armSubsystem.getArmPosition();
-            armSubsystem.runArm(armPID.calculate(armPos, ArmConstants.speakerEncoder));
-        } else if (j.getRawButton(OIConstants.Y)) {
-            armPos = armSubsystem.getArmPosition();
-            armSubsystem.runArm(armPID.calculate(armPos, ArmConstants.farSpeakerEncoder));
-        } else if (j.getRawButton(OIConstants.A)) {
-            armPos = armSubsystem.getArmPosition();
-            armSubsystem.runArm(armPID.calculate(armPos, ArmConstants.ampEncoder));
-        } else {
-            if (defaultArmDown) {
-                armPos = armSubsystem.getArmPosition();
-                armSubsystem.runArm(0.5*armPID.calculate(armPos, ArmConstants.armHover));
-            } else {
-                armSubsystem.runArm(armInput);
-            }
-        }
+        // if (j.getRawButton(OIConstants.B)) {
+        //     armPos = armSubsystem.getArmPosition();
+        //     armSubsystem.runArm(armPID.calculate(armPos, ArmConstants.speakerEncoder));
+        // } else if (j.getRawButton(OIConstants.Y)) {
+        //     armPos = armSubsystem.getArmPosition();
+        //     armSubsystem.runArm(armPID.calculate(armPos, ArmConstants.farSpeakerEncoder));
+        // } else if (j.getRawButton(OIConstants.A)) {
+        //     armPos = armSubsystem.getArmPosition();
+        //     armSubsystem.runArm(armPID.calculate(armPos, ArmConstants.ampEncoder));
+        // } else {
+        //     if (defaultArmDown) {
+        //         armPos = armSubsystem.getArmPosition();
+        //         armSubsystem.runArm(0.5*armPID.calculate(armPos, ArmConstants.armHover));
+        //     } else {
+        //         armSubsystem.runArm(armInput);
+        //     }
+        // }
 
-        if(j.getRawButtonPressed(OIConstants.START)){
-            defaultArmDown = !defaultArmDown;
-        }
+        // if(j.getRawButtonPressed(OIConstants.START)){
+        //     defaultArmDown = !defaultArmDown;
+        // }
 
 
 

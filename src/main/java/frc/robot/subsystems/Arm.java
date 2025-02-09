@@ -61,6 +61,7 @@ public class Arm extends SubsystemBase{
         SparkMaxConfig leftConfig = new SparkMaxConfig();
         leftConfig.idleMode(mode);
         leftConfig.inverted(false);
+        leftConfig.follow(ArmConstants.rightMotorID, true);
         leftMotor.configure(leftConfig, null, null);
         SparkMaxConfig rightConfig = new SparkMaxConfig();
         rightConfig.idleMode(mode);

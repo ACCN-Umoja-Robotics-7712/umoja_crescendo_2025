@@ -1,22 +1,19 @@
 package frc.robot.subsystems;
 
-import com.studica.frc.AHRS;
-import com.studica.frc.AHRS.NavXComType;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import java.util.ArrayList;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 
-import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -24,15 +21,14 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.GameConstants;
-import frc.robot.Constants.PoseEstimatorConstants;
+import frc.robot.LimelightHelpers;
+import frc.robot.RobotContainer;
 
 public class SwerveSubsystem extends SubsystemBase {
     private final SwerveModule frontLeft = new SwerveModule(
@@ -95,6 +91,9 @@ public class SwerveSubsystem extends SubsystemBase {
     );
     StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
     StructArrayPublisher<SwerveModuleState> swerveStatePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
+    StructArrayPublisher<Pose2d> allPointsPublisher = NetworkTableInstance.getDefault()
+      .getStructArrayTopic("AllPosesArray", Pose2d.struct).publish();
+    
 
     public SwerveSubsystem() {
         new Thread(() -> {
@@ -289,6 +288,23 @@ public class SwerveSubsystem extends SubsystemBase {
     
         posePublisher.set(poseEstimator.getEstimatedPosition());
         }
+        ArrayList<Pose2d> allPoints = new ArrayList<>();
+        for (Pose2d point: Constants.bluePickUpPositions) {
+            allPoints.add(point);
+        }
+        for (Pose2d point: Constants.blueReefPositions) {
+            allPoints.add(point);
+        }
+        allPoints.add(Constants.blueProcessorPosition);
+        
+        for (Pose2d point: Constants.redPickUpPositions) {
+            allPoints.add(point);
+        }
+        for (Pose2d point: Constants.redReefPositions) {
+            allPoints.add(point);
+        }
+        allPoints.add(Constants.redProcessorPosition);
+        allPointsPublisher.set(allPoints.toArray(new Pose2d[0]));
     }
 
     public void stopModules() {
