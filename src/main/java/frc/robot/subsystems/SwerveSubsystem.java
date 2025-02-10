@@ -14,6 +14,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -291,17 +292,25 @@ public class SwerveSubsystem extends SubsystemBase {
         ArrayList<Pose2d> allPoints = new ArrayList<>();
         for (Pose2d point: Constants.bluePickUpPositions) {
             allPoints.add(point);
+            allPoints.add(offsetPoint(point, 3*Constants.Measurements.coralStationDivotOffset));
+            allPoints.add(offsetPoint(point, -3*Constants.Measurements.coralStationDivotOffset));
         }
         for (Pose2d point: Constants.blueReefPositions) {
             allPoints.add(point);
+            allPoints.add(offsetPoint(point, Constants.Measurements.branchOffset));
+            allPoints.add(offsetPoint(point, -Constants.Measurements.branchOffset));
         }
         allPoints.add(Constants.blueProcessorPosition);
         
         for (Pose2d point: Constants.redPickUpPositions) {
             allPoints.add(point);
+            allPoints.add(offsetPoint(point, 3*Constants.Measurements.coralStationDivotOffset));
+            allPoints.add(offsetPoint(point, -3*Constants.Measurements.coralStationDivotOffset));
         }
         for (Pose2d point: Constants.redReefPositions) {
             allPoints.add(point);
+            allPoints.add(offsetPoint(point, Constants.Measurements.branchOffset));
+            allPoints.add(offsetPoint(point, -Constants.Measurements.branchOffset));
         }
         allPoints.add(Constants.redProcessorPosition);
         allPointsPublisher.set(allPoints.toArray(new Pose2d[0]));
@@ -384,5 +393,10 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         
         return nearestPoint;
+    }
+
+    public Pose2d offsetPoint(Pose2d pose, double offset) {
+        Transform2d transform = new Transform2d(0, offset, new Rotation2d(0));
+        return pose.transformBy(transform);
     }
 }

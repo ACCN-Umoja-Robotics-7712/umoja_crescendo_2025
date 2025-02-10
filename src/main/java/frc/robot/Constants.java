@@ -269,8 +269,13 @@ public final class Constants {
 
     public static final class Measurements {
         // all in m
-        public static final double robotCenterToFront = .43815;
+        // robot l/w 28.5 by 28.5 inches
+        // bumper width ~= 3 inches
+        // TODO: Need to add potential intake front distance
+        public static final double robotCenterToFront = .43815; // robot length/2 + bumper width = 14.25 + 3 = 17.25 inches
         public static final double robotSideOffset = 0;
+        public static final double branchOffset = 0.1651; // 6.5 inches
+        public static final double coralStationDivotOffset = 0.2032; // 8 inches
     }
 
     // public static final double degreesToRadians = 
