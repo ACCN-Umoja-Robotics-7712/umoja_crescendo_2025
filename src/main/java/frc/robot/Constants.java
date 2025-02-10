@@ -282,7 +282,7 @@ public final class Constants {
         //y_{17}.y-r_{l}\cdot\sin\left(60\right)-r_{w}\cdot\cos\left(60\right)
 
         public static final Pose2d redPickupLeft1 = new Pose2d(AprilTagPositions.redPickupLeft1.getX()-Measurements.robotCenterToFront*Math.cos(Units.degreesToRadians(54))-Measurements.robotSideOffset*Math.sin(Units.degreesToRadians(54)), 
-        AprilTagPositions.redPickupLeft1.getY()+Measurements.robotCenterToFront*Math.sin(Units.degreesToRadians(54)) - Measurements.robotSideOffset*Math.sin(Units.degreesToRadians(54)), new Rotation2d(Units.degreesToRadians(126)));
+        AprilTagPositions.redPickupLeft1.getY()+Measurements.robotCenterToFront*Math.sin(Units.degreesToRadians(54)) - Measurements.robotSideOffset*Math.sin(Units.degreesToRadians(54)), new Rotation2d(Units.degreesToRadians(306)));
 
         public static final Pose2d redPickupRight2 = new Pose2d(AprilTagPositions.redPickupRight2.getX()-Measurements.robotCenterToFront*Math.cos(Units.degreesToRadians(54)) + Measurements.robotSideOffset*Math.sin(Units.degreesToRadians(54)), 
         AprilTagPositions.redPickupRight2.getY()-Measurements.robotCenterToFront*Math.sin(Units.degreesToRadians(54))-Measurements.robotSideOffset*Math.sin(Units.degreesToRadians(54)), new Rotation2d(Units.degreesToRadians(54)));
