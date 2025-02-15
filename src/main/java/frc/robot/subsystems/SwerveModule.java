@@ -134,7 +134,7 @@ public class SwerveModule {
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
-            driveEncoder.getPosition(),
+            getDrivePosition(),
             Rotation2d.fromRadians(getTurningPosition()));
       }
 }
