@@ -15,11 +15,19 @@ public class TeleCommandGroup extends ParallelCommandGroup{
         addCommands(
             new SwerveJoystick(
                 swerveSubsystem,
-                () -> Math.pow(-driverController.getRawAxis(OIConstants.kDriverYAxis), 3),
-                () -> Math.pow(-driverController.getRawAxis(OIConstants.kDriverXAxis), 3),
+                () -> -driverController.getRawAxis(OIConstants.kDriverYAxis),
+                () -> -driverController.getRawAxis(OIConstants.kDriverXAxis),
                 () -> -driverController.getRawAxis(OIConstants.kDriverRotAxis)
             )
         );
+        // addCommands(
+        //     new SwerveJoystick(
+        //         swerveSubsystem,
+        //         () -> Math.pow(-driverController.getRawAxis(OIConstants.kDriverYAxis), 3),
+        //         () -> Math.pow(-driverController.getRawAxis(OIConstants.kDriverXAxis), 3),
+        //         () -> -driverController.getRawAxis(OIConstants.kDriverRotAxis)
+        //     )
+        // );
 
         //Operator Command
         addCommands(

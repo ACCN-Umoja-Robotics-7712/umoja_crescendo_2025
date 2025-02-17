@@ -16,6 +16,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 
@@ -23,7 +24,7 @@ import frc.robot.Constants.ModuleConstants;
 public class SwerveModule {
     public final SparkMax driveMotor, turnMotor;
     private final RelativeEncoder driveEncoder, turnEncoder;
-    private final PIDController turnPIDController;
+    private final PIDController drivePIDController, turnPIDController;
     public final CANcoder absoluteEncoder;
     public final int absoluteEncoderID;
 
@@ -63,6 +64,9 @@ public class SwerveModule {
 
         turnPIDController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnPIDController.enableContinuousInput(-Math.PI, Math.PI);
+
+        drivePIDController = new PIDController(ModuleConstants.kPDriving, 0, 0);
+        drivePIDController.enableContinuousInput(-DriveConstants.kTeleDriveMaxSpeedMetersPerSecond, -DriveConstants.kTeleDriveMaxSpeedMetersPerSecond);
         
         resetEncoders();
     }
@@ -106,13 +110,15 @@ public class SwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState state) {
+        SmartDashboard.putNumber("Swerve current " + absoluteEncoderID, getState().speedMetersPerSecond);
+        SmartDashboard.putNumber("Swerve wanted " + absoluteEncoderID, state.speedMetersPerSecond);
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
             stop();
             return;
         }
         state.optimize(getState().angle);
         driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
-        // driveMotor.set(drivePIDcontroller.calculate())
+        // driveMotor.set(drivePIDController.calculate(getState().speedMetersPerSecond, state.speedMetersPerSecond));
         // TODO: CHANGE THIS TO PID
 
         //fill canbus
