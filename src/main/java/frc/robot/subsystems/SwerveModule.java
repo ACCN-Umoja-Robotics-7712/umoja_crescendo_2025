@@ -72,7 +72,7 @@ public class SwerveModule {
     }
 
     public double getTurningPosition() {
-        return turnEncoder.getPosition()*ModuleConstants.kTurnEncoderRot2Rad;
+        return getAbsoluteEncoderRad();
     }
 
     public double getDriveVelocity() {
@@ -93,13 +93,13 @@ public class SwerveModule {
 
     public void resetEncoders() {
         driveEncoder.setPosition(0);
-        resetTurn();
+        // resetTurn();
     }
 
-    public void resetTurn(){
-        double position = getAbsoluteEncoderRad();
-        turnEncoder.setPosition(position);
-    }
+    // public void resetTurn(){
+    //     double position = getAbsoluteEncoderRad();
+    //     turnEncoder.setPosition(position);
+    // }
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurningPosition()));
@@ -110,7 +110,7 @@ public class SwerveModule {
             stop();
             return;
         }
-        state = SwerveModuleState.optimize(state, getState().angle);
+        state.optimize(getState().angle);
         driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
         // driveMotor.set(drivePIDcontroller.calculate())
         // TODO: CHANGE THIS TO PID

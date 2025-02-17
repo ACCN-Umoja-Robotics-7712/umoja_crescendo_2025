@@ -153,12 +153,12 @@ public class SwerveSubsystem extends SubsystemBase {
         backRight.resetEncoders();
     }
 
-    public void resetTurn(){
-        frontLeft.resetTurn();
-        frontRight.resetTurn();
-        backLeft.resetTurn();
-        backRight.resetTurn();
-    }
+    // public void resetTurn(){
+    //     frontLeft.resetTurn();
+    //     frontRight.resetTurn();
+    //     backLeft.resetTurn();
+    //     backRight.resetTurn();
+    // }
 
     public void zeroHeading(){
         gyro.reset();

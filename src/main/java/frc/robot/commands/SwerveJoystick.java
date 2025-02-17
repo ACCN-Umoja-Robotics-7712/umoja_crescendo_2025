@@ -83,9 +83,9 @@ public class SwerveJoystick extends Command {
 
     swerveSubsystem.setModuleStates(moduleStates);
 
-    if(j.getRawButton(OIConstants.START)){
-      swerveSubsystem.resetTurn();
-    }
+    // if(j.getRawButton(OIConstants.START)){
+    //   swerveSubsystem.resetTurn();
+    // }
     if(j.getRawButton(OIConstants.BACK)){
       swerveSubsystem.zeroHeading();
     }
