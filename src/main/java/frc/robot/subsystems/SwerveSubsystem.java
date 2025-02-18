@@ -197,6 +197,8 @@ public class SwerveSubsystem extends SubsystemBase {
         return DriveConstants.kDriveKinematics.toChassisSpeeds(frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
     }
 
+    Boolean asdf = true;
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("FL", Math.toDegrees(frontLeft.getAbsoluteEncoderRad()));
@@ -290,32 +292,41 @@ public class SwerveSubsystem extends SubsystemBase {
         posePublisher.set(poseEstimator.getEstimatedPosition());
         }
         ArrayList<Pose2d> allPoints = new ArrayList<>();
-        for (Pose2d point: Constants.bluePickUpPositions) {
-            allPoints.add(point);
-            allPoints.add(offsetPoint(point, 3*Constants.Measurements.coralStationDivotOffset));
-            allPoints.add(offsetPoint(point, -3*Constants.Measurements.coralStationDivotOffset));
-        }
-        for (Pose2d point: Constants.blueReefPositions) {
-            allPoints.add(point);
-            allPoints.add(offsetPoint(point, Constants.Measurements.branchOffset));
-            allPoints.add(offsetPoint(point, -Constants.Measurements.branchOffset));
-        }
-        allPoints.add(Constants.blueProcessorPosition);
+        // for (Pose2d point: Constants.bluePickUpPositions) {
+        //     allPoints.add(point);
+        //     allPoints.add(offsetPoint(point, 3*Constants.Measurements.coralStationDivotOffset));
+        //     allPoints.add(offsetPoint(point, -3*Constants.Measurements.coralStationDivotOffset));
+        // }
+        // for (Pose2d point: Constants.blueReefPositions) {
+        //     allPoints.add(point);
+        //     allPoints.add(offsetPoint(point, Constants.Measurements.branchOffset));
+        //     allPoints.add(offsetPoint(point, -Constants.Measurements.branchOffset));
+        // }
+        // allPoints.add(Constants.blueProcessorPosition);
         
-        for (Pose2d point: Constants.redPickUpPositions) {
-            allPoints.add(point);
-            allPoints.add(offsetPoint(point, 3*Constants.Measurements.coralStationDivotOffset));
-            allPoints.add(offsetPoint(point, -3*Constants.Measurements.coralStationDivotOffset));
-        }
-        for (Pose2d point: Constants.redReefPositions) {
-            allPoints.add(point);
-            allPoints.add(offsetPoint(point, Constants.Measurements.branchOffset));
-            allPoints.add(offsetPoint(point, -Constants.Measurements.branchOffset));
-        }
-        allPoints.add(Constants.redProcessorPosition);
-        allPointsPublisher.set(allPoints.toArray(new Pose2d[0]));
+        // for (Pose2d point: Constants.redPickUpPositions) {
+        //     allPoints.add(point);
+        //     allPoints.add(offsetPoint(point, 3*Constants.Measurements.coralStationDivotOffset));
+        //     allPoints.add(offsetPoint(point, -3*Constants.Measurements.coralStationDivotOffset));
+        // }
+        // for (Pose2d point: Constants.redReefPositions) {
+        //     allPoints.add(point);
+        //     allPoints.add(offsetPoint(point, Constants.Measurements.branchOffset));
+        //     allPoints.add(offsetPoint(point, -Constants.Measurements.branchOffset));
+        // }
+        // allPoints.add(Constants.redProcessorPosition);
+        // allPointsPublisher.set(allPoints.toArray(new Pose2d[0]));
+
+        // if (asdf) {
+        //     for (Pose2d point: allPoints){
+        //         System.out.println(point.getX() + "\n" + point.getY() + "\n" + point.getRotation().getDegrees());
+        //     }    
+        //     asdf = false;
+        // }
+        
     }
 
+    
     public void stopModules() {
         frontLeft.stop();
         frontRight.stop();

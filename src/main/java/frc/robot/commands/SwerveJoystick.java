@@ -62,9 +62,10 @@ public class SwerveJoystick extends Command {
       ySpeed = 0.0;
     }
     turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
+    boolean isRobotOrientatedDrive = j.getRawAxis(OIConstants.RT) >= 0.5;
 
     // 3. Make the driving smoother
-    if (RobotContainer.driverController.getRawButton(OIConstants.kDriverRB)){
+    if (RobotContainer.driverController.getRawButton(OIConstants.kDriverRB) || isRobotOrientatedDrive){
       xSpeed = xLimiter.calculate(xSpeed) * (DriveConstants.kTeleDriveMaxSpeedMetersPerSecond * DriveConstants.kSlowButtonDriveModifier);
       ySpeed = yLimiter.calculate(ySpeed) * (DriveConstants.kTeleDriveMaxSpeedMetersPerSecond * DriveConstants.kSlowButtonDriveModifier);
       turningSpeed = turningLimiter.calculate(turningSpeed) * (DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond * DriveConstants.kSlowButtonTurnModifier);
@@ -76,8 +77,11 @@ public class SwerveJoystick extends Command {
 
     // 4. Construct desired chassis speeds
     ChassisSpeeds chassisSpeeds;
-    chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
-
+    if (!isRobotOrientatedDrive) {
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+    } else {
+      chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+    }
     // 5. Convert chassis speeds to individual module states
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
